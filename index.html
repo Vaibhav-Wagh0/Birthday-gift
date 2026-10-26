@@ -3,55 +3,344 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Happy Birthday 🎉</title>
+  <meta name="theme-color" content="#ff9a9e" />
+
+  <title>Happy Birthday Dr! 🎂</title>
+
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb);
+      font-family: Arial, sans-serif;
+      overflow-x: hidden;
+    }
+
+    .birthday-card {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 440px;
+      padding: 30px 24px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.93);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      border-radius: 28px;
+      box-shadow: 0 20px 60px rgba(160, 50, 100, 0.2);
+      animation: appear 0.9s ease-out;
+    }
+
+    .birthday-title {
+      color: #e84393;
+      font-size: clamp(1.8rem, 6vw, 2.4rem);
+      font-weight: 800;
+      line-height: 1.3;
+      margin-bottom: 20px;
+    }
+
+    /* Photo and gradient border */
+    .photo-frame {
+      width: 190px;
+      height: 190px;
+      margin: 0 auto 18px;
+      padding: 5px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ff4d8d, #c084fc, #ffd166);
+      box-shadow: 0 0 28px rgba(236, 72, 153, 0.35);
+      animation: glow 3s ease-in-out infinite alternate;
+    }
+
+    .birthday-photo {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      border: 4px solid white;
+      border-radius: 50%;
+    }
+
+    .person-name {
+      margin-bottom: 16px;
+      color: #be185d;
+      font-size: 1.35rem;
+      font-weight: bold;
+    }
+
+    .birthday-message {
+      color: #555;
+      font-size: 1.05rem;
+      line-height: 1.8;
+      margin-bottom: 22px;
+    }
+
+    .birthday-emojis {
+      font-size: 2.7rem;
+      margin: 18px 0;
+      animation: bounce 2s ease-in-out infinite;
+    }
+
+    .birthday-quote {
+      color: #777;
+      font-size: 0.9rem;
+      font-style: italic;
+      line-height: 1.6;
+    }
+
+    .surprise-button {
+      margin-top: 22px;
+      padding: 14px 22px;
+      width: 100%;
+      color: white;
+      font-size: 1rem;
+      font-weight: bold;
+      background: linear-gradient(135deg, #ff4d8d, #c026d3);
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(192, 38, 211, 0.2);
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+
+    .surprise-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 25px rgba(192, 38, 211, 0.3);
+    }
+
+    .surprise-button:focus-visible {
+      outline: 3px solid #7e22ce;
+      outline-offset: 4px;
+    }
+
+    .surprise-message {
+      margin-top: 20px;
+      color: #9333ea;
+      font-size: 1.15rem;
+      font-weight: bold;
+      line-height: 1.6;
+      animation: appear 0.5s ease-out;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    /* Floating balloons */
+    .balloons {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .balloons span {
+      position: absolute;
+      bottom: -100px;
+      font-size: 35px;
+      animation: floatUp 12s linear infinite;
+    }
+
+    .balloons span:nth-child(1) {
+      left: 8%;
+      animation-delay: 0s;
+    }
+
+    .balloons span:nth-child(2) {
+      left: 28%;
+      animation-delay: 3s;
+    }
+
+    .balloons span:nth-child(3) {
+      left: 50%;
+      animation-delay: 6s;
+    }
+
+    .balloons span:nth-child(4) {
+      left: 72%;
+      animation-delay: 2s;
+    }
+
+    .balloons span:nth-child(5) {
+      left: 90%;
+      animation-delay: 5s;
+    }
+
+    @keyframes floatUp {
+      from {
+        transform: translateY(0) rotate(0deg);
+      }
+      to {
+        transform: translateY(-120vh) rotate(25deg);
+      }
+    }
+
+    @keyframes glow {
+      from {
+        box-shadow: 0 0 18px rgba(236, 72, 153, 0.25);
+      }
+      to {
+        box-shadow: 0 0 32px rgba(192, 38, 211, 0.45);
+      }
+    }
+
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-7px);
+      }
+    }
+
+    @keyframes appear {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .birthday-card {
+        padding: 25px 18px;
+        border-radius: 22px;
+      }
+
+      .photo-frame {
+        width: 160px;
+        height: 160px;
+      }
+
+      .birthday-message {
+        font-size: 1rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
     }
   </style>
 </head>
-<body class="min-h-screen flex items-center justify-center px-4">
-  <div class="bg-white shadow-2xl rounded-2xl p-6 sm:p-8 max-w-md w-full text-center">
-    <h1 class="text-3xl sm:text-4xl font-extrabold text-pink-500 mb-4">🎂 Happy Birthday Dr! 🎂</h1>
-    <p class="text-base sm:text-lg text-gray-700 mb-6">
-      Wishing you a day filled with love, laughter, and everything that makes you smile.
-      May this year bring you happiness, success, and unforgettable memories.
+
+<body class="min-h-screen flex items-center justify-center px-4 py-8">
+
+  <div class="balloons" aria-hidden="true">
+    <span>🎈</span>
+    <span>🎈</span>
+    <span>🎈</span>
+    <span>🎈</span>
+    <span>🎈</span>
+  </div>
+
+  <main class="birthday-card">
+
+    <h1 class="birthday-title">
+      🎂 Happy Birthday Dr! 🎂
+    </h1>
+
+    <!-- Keep the photo in the same repository as index.html -->
+    <div class="photo-frame">
+      <img
+        src="./birthday-person.jpg"
+        alt="Birthday person"
+        class="birthday-photo"
+        fetchpriority="high"
+      />
+    </div>
+
+    <h2 class="person-name">
+      The Birthday Star ✨
+    </h2>
+
+    <p class="birthday-message">
+      Wishing you a day filled with love, laughter,
+      and everything that makes you smile.
+      May this year bring you happiness, success,
+      and unforgettable memories. 💖
     </p>
 
-    <div class="text-5xl sm:text-6xl mb-6">🎉🎈🎁</div>
+    <div class="birthday-emojis" aria-hidden="true">
+      🎉 🎈 🎁
+    </div>
 
-    <p class="text-gray-600 italic text-sm sm:text-base">
-      "Count your life by smiles, not tears. Count your age by friends, not years."
+    <p class="birthday-quote">
+      "Count your life by smiles, not tears.
+      Count your age by friends, not years."
     </p>
 
-    <button onclick="celebrate()" class="mt-6 px-6 py-3 bg-pink-500 text-white rounded-xl shadow hover:bg-pink-600 transition w-full sm:w-auto">
+    <button
+      type="button"
+      id="surpriseButton"
+      class="surprise-button"
+      aria-controls="surprise"
+      aria-expanded="false"
+    >
       Click for a Surprise 🎊
     </button>
 
-    <p id="surprise" class="mt-4 text-lg sm:text-xl font-semibold text-purple-600 hidden">
+    <p
+      id="surprise"
+      class="surprise-message"
+      aria-live="polite"
+      hidden
+    >
       You are amazing! Have the best birthday ever! 💖
+      <br />
+      Keep smiling and keep shining! ✨
     </p>
-  </div>
+
+  </main>
 
   <script>
-    function celebrate() {
-      document.getElementById('surprise').classList.remove('hidden');
+    const surpriseButton = document.getElementById("surpriseButton");
+    const surpriseMessage = document.getElementById("surprise");
 
-      confetti({
-        particleCount: 150,
-        spread: 70,
-        origin: { y: 0.6 }
-      });
+    surpriseButton.addEventListener("click", function () {
+      const isHidden = surpriseMessage.hidden;
 
-      setTimeout(() => {
-        confetti({ particleCount: 100, spread: 120, origin: { x: 0.1 } });
-        confetti({ particleCount: 100, spread: 120, origin: { x: 0.9 } });
-      }, 300);
-    }
+      surpriseMessage.hidden = !isHidden;
+      surpriseButton.setAttribute("aria-expanded", String(isHidden));
+
+      if (isHidden && typeof confetti === "function") {
+        confetti({
+          particleCount: 150,
+          spread: 80,
+          origin: { y: 0.6 }
+        });
+
+        setTimeout(() => {
+          confetti({
+            particleCount: 80,
+            spread: 120,
+            origin: { x: 0.1, y: 0.7 }
+          });
+
+          confetti({
+            particleCount: 80,
+            spread: 120,
+            origin: { x: 0.9, y: 0.7 }
+          });
+        }, 300);
+      }
+    });
   </script>
+
 </body>
 </html>
-
-
